@@ -1,0 +1,68 @@
+<div ng-class="menuClasses" class="le-menu-classes">
+    <div class="section column one"
+         id="section-{{section.id}}"
+         ng-repeat='section in menu.menus track by $index'
+         ng-if="!section.deleted">
+        <div class="section-sortable rl-sub-section" ng-repeat="subsection in section.subsections"
+             ng-if="!subsection.deleted" data-rel="#subsection-content-{{subsection.id}}">
+            <div class='row-wrapper subsection-wrapper'>
+                <div
+                        class='subsection rl-full-list'
+                        id='subsection-{{subsection.id}}'
+                        ng-if='!subsection.deleted'
+                        data-rel='#subsection-content-{{subsection.id}}'
+                >
+                    <div class='featured-item-wrapper' ng-show='subsection.featuredItems.length > 0'>
+                        <img ng-src='{{subsection.featuredItems[0].item.imageUrl}}' class='featured-item-image'>
+                    </div>
+
+                    <h3 class='subsection-title' ng-bind='subsection.name'></h3>
+
+                    <div
+                            class='subsection-description' ng-if='subsection.description.trim().length > 0'
+                            ng-bind-html='subsection.description'
+                    ></div>
+                </div>
+            </div>
+
+            <div class="subsection-content-space rl-content" set-content-min-height>
+                <div class="subsection-content" id="subsection-content-{{subsection.id}}">
+                    <div class="subsection-description" ng-if='subsection.description.trim().length > 0'
+                         ng-bind-html='subsection.description | trustedHtml'></div>
+
+                    <ul class="subsection-item-list list-group">
+                        <li class="subsection-item list-group-item" id="subsection-item-{{item.id}}"
+                            ng-repeat='item in subsection.items' ng-if="!item.deleted">
+                            <img
+                                    ng-src='{{item.imageUrl}}' ng-show='item.imageUrl.length > 0'
+                                    class='image subsection-item-image'
+                            >
+
+                            <h4 class='name' ng-bind='item.name'></h4>
+
+                            <span
+                                    class='description'
+                                    ng-if='item.description.trim().length > 0'
+                                    ng-bind-html='item.description'
+                            ></span>
+
+                            <span class='price' ng-repeat='price in item.prices'>
+                                <span class='price-value'>{{price.value | currency}}</span>
+                                <span
+                                        class='price-label' ng-bind='price.label'
+                                ></span>
+                            </span>
+
+                            <div class='tags' ng-if='item.tags.length > 0'>
+                                <span
+                                        class='tag' ng-repeat='tag in item.tags' ng-bind='tag.tag'
+                                        ng-class='tag.tag.slugify()'
+                                ></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

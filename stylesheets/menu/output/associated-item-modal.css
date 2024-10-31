@@ -1,0 +1,17 @@
+.associated-item-modal .associated-item-image {
+  display: block;
+  height: auto;
+  width: auto;
+  max-width: 100%;
+}
+.associated-item-modal .price {
+  display: block;
+}
+.associated-item-modal .tags .tag {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin: 0 5px 0 0;
+  padding: 0 5px;
+}
+/*# sourceMappingURL=associated-item-modal.css.map */

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- For testing angular code locally -->
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/libs/angular.js"></script>
+    <script src="/javascripts/libs/angular-sanitize.min.js"></script>
+    <script src="/javascripts/libs/ui-bootstrap-tpls.min.js"></script>
+    <script src="/javascripts/libs/ui-bootstrap.min.js"></script>
+    <script src="/javascripts/menu/angular-menu-output-controller.js"></script>
+    <link rel="stylesheet" href="stylesheets/menu/output/full.css"/>
+    <link rel="stylesheet" href="stylesheets/menu/output/associated-item-modal.css"/>
+    <script>
+        angular.element(document).ready(function () {
+            console.log('asdfasdf');
+            var menuApp = document.getElementById('rl-menu-1');
+            angular.bootstrap(menuApp, ['menu']);
+        });
+    </script>
+</head>
+<body>
+<div id='rl-menu-1' class='rl-menu le-menu-angular le-plugin-wrapper clearfix'>
+    <div class='le-menu'>
+        <div
+                class='rl-menu-controller'
+                ng-controller='AngularMenuController'
+                ng-include="'/partials/menu/angular-menu-output-full.html'"
+                data-organizationId='453'
+                data-menuId='1315'
+                data-menuDepth='section'
+                data-menuClasses='menu-full menu-columns column-count-3'
+        ></div>
+    </div>
+</div>
+</body>
+</html>

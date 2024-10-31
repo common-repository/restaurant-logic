@@ -1,0 +1,1 @@
+// nothing here used for wordpress inline javscript

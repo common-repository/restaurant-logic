@@ -1,0 +1,80 @@
+<div ng-class="menuClasses" class="le-menu-classes">
+	<div class="search-control">
+		<div id="search">
+			<div class="input-group">
+				<input class="form-control search" placeholder="Search for..." ng-model="search.searchItem">
+			</div>
+		</div>
+		<div class="btn-group navbar-account" uib-dropdown auto-close="outsideClick">
+			<button type="button" class="btn btn-primary dropdown-toggle filter-button" id="dropdown-account-settings" uib-dropdown-toggle aria-expanded="true">
+				Filter
+				<span class="caret"></span>
+			</button>
+			<ul class="uib-dropdown-menu filter-menu" role="menu" aria-labelledby="dropdown-account-settings">
+				<li role="presentation" ng-repeat="tag in menu.tags"  ng-click="tag.checked = !tag.checked">
+					<i class="fa " ng-class="{'fa-check-square-o': tag.checked, 'fa-square-o': !tag.checked}"></i>
+					{{tag.tag}}
+				</li>
+				<li class="clear-filters">
+					<a ng-click="clearFilters()">Clear filters</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="section" id="section-{{section.id}}" ng-repeat='section in menu.menus' ng-if="!section.deleted">
+		<div class="featured-item-wrapper" ng-show="section.featuredItems.length > 0">
+			<img ng-src="{{section.featuredItems[0].item.imageUrl}}" class="featured-item-image">
+		</div>
+
+		<h1 class="section-title" ng-bind-html='highlight(section.name, search.searchItem)'></h1>
+
+		<div class="section-description" ng-if='section.description.trim().length > 0' ng-bind-html='highlight(section.description, search.searchItem)'></div>
+
+		<div class="section-sortable">
+			<div class="subsection" id="subsection-{{subsection.id}}" ng-repeat='subsection in section.subsections' ng-if="!subsection.deleted">
+				<h2 class="subsection-title" ng-bind-html='highlight(subsection.name, search.searchItem)' rotate-header></h2>
+
+				<div class="subsection-content">
+					<div class="subsection-description" ng-if='subsection.description.trim().length > 0' ng-bind-html='highlight(subsection.description, search.searchItem)'></div>
+
+					<ul class="subsection-item-list list-group">
+						<li class="subsection-item list-group-item" id="subsection-item-{{item.id}}"
+							ng-repeat='item in subsection.items | filter: search.searchItem'
+							ng-show="selectedTagIds().length == 0 || arrayHasMatches(item.tagIds, selectedTagIds())"
+							ng-if="!item.deleted">
+							<img ng-src='{{item.imageUrl}}' ng-show="item.imageUrl.length > 0" class="image subsection-item-image">
+
+							<h4 class="name" ng-bind-html='highlight(item.name, search.searchItem)'></h4>
+
+							<span class="description" ng-if='item.description.trim().length > 0' ng-bind-html='highlight(item.description, search.searchItem)'></span>
+
+							<span class="price" ng-repeat='price in item.prices'>
+								<span class="price-value">{{price.value | currency:"$"}}</span> <span class="price-label" ng-bind="price.label"></span>
+							</span>
+
+							<div class="tags" ng-if="item.tags.length > 0">
+								<span class='tag' ng-repeat='tag in item.tags' ng-bind-html='highlight(tag.tag, search.searchItem)' ng-class="tag.tag.slugify()"></span>
+							</div>
+
+							<div class="associated-items" ng-if="item.associated.length > 0">
+								<h3 class="associated-heading">Related Items</h3>
+								<div class="associated-items-list">
+									<p class="associated-item"
+									   id="associated-item-{{aItem.associatedItemId}}"
+									   ng-repeat="aItem in item.associated"
+									   ng-bind="aItem.associatedItem.name"
+									   ng-click="open(aItem)">
+									</p>
+								</div>
+							</div>
+						</li>
+
+						<li class='list-group-item no-matches' ng-if="!areMatches(subsection)">
+							No Matching Items
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
